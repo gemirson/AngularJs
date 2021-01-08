@@ -1,10 +1,10 @@
-angular.module("listaTelefonica",[]);
+angular.module("listaTelefonica",["ngMessages"]);
 angular.module("listaTelefonica").controller("listaTelefonicaCtrl",($scope)=>{
  $scope.app="Lista Telefonica"
  $scope.contatos=[
-     {nome:"Pedro",telefone:"999999999",  cor:"blue"  },
-     {nome:"João", telefone:"999912345",  cor:"yellow"},
-     {nome:"Maria",telefone:"999954321",  cor:"green" }
+     {nome:"Pedro",telefone:"999999999", data: new Date(), cor:"blue"  ,operadora:{nome:"Oi",codigo:31}  },
+     {nome:"João", telefone:"999912345", data: new Date(), cor:"yellow",operadora:{nome:"Vivo",codigo:15}},
+     {nome:"Maria",telefone:"999954321", data: new Date(), cor:"green" ,operadora:{nome:"Tim",codigo:41} }
  ];
  $scope.operadoras= [
      {nome:"Oi",codigo:31},

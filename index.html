@@ -1,8 +1,9 @@
 <html ng-app="listaTelefonica">
   <head>
     <title>Lista Contatos</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-    <script src="app/js/ListController.js"></script>
+    <script src ="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src ="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-messages.js"></script>
+    <script src ="app/js/ListController.js"></script>
     <link rel="stylesheet" href="app/css/ListController.css" />
     <link rel="stylesheet" href="app/css/bootstrap/bootstrap.css" />
   </head>
@@ -17,6 +18,7 @@
           <th>Telefone</th>
           <th>Operadora</th>
           <th>Cor</th>
+          <th>Data</th>
         </tr>
         <tr
           ng-class="{selecionado :contato.selecionado}"
@@ -29,7 +31,7 @@
               ng-model="contato.selecionado"
             />
           </td>
-          <td>{{contato.nome}}</td>
+          <td>{{contato.nome | uppercase}}</td>
           <td>{{contato.telefone}}</td>
           <td>{{contato.operadora.nome}}</td>
           <td>
@@ -38,6 +40,7 @@
               ng-style="{'background-color':contato.cor}"
             ></div>
           </td>
+          <td>{{contato.data | date:'dd/MM/yy HH:mm'}}</td>
         </tr>
       </table>
       <hr />
@@ -58,6 +61,7 @@
           placeholder="Telefone"
           ng-required="true"
           name="telefone"
+          ng-pattern="/^\d{5}-\d{4}$/"
         />
         <select
           class="form-control"
@@ -68,24 +72,29 @@
         </select>
       </form>
 
-      <div
-        class="alert alert-danger"
-        ng-show="contatoForm.nome.$error.required && contatoForm.nome.$dirty"
-      >
-        Por favor, preencha o nome !
+      <div ng-messages="contatoForm.nome.$error" class="alert alert-danger" ng-show="contatoForm.nome.$dirty">
+        <div ng-message="required && contatoForm.nome.$dirty">
+          Por favor, preencha o nome !
+        </div>
+        <div ng-message="minlength">
+          O campo deve ter no mínimo 10 caracteres.
+        </div>
       </div>
-      <div
-        class="alert alert-danger"
-        ng-show="contatoForm.nome.$error.minlength && contatoForm.nome.$dirty"
-      >
-        O campo deve ter no mínimo 10 caracteres.
+
+      <div ng-messages="contatoForm.telefone.$error" class="alert alert-danger" ng-show="contatoForm.nome.$dirty">
+        <div
+          ng-message="required && contatoForm.telefone.$dirty"
+        >
+          Por favor, preencha o telefone !
+        </div>
+        <div 
+          ng-message="pattern"
+        >
+          Por favor, preencha o campo telefone no seguinte formato
+          99999-99999 !
+        </div>
       </div>
-      <div
-        class="alert alert-danger"
-        ng-show="contatoForm.telefone.$invalid && contatoForm.telefone.$dirty"
-      >
-        Por favor, preencha o telefone !
-      </div>
+
       <button
         class="btn btn-primary btn-block"
         ng-click="adicionaContato(contato)"
