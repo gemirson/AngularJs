@@ -1,0 +1,106 @@
+<html ng-app="listaTelefonica">
+  <head>
+    <title>Lista Contatos</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app/js/ListController.js"></script>
+    <link rel="stylesheet" href="app/css/ListController.css" />
+    <link rel="stylesheet" href="app/css/bootstrap/bootstrap.css" />
+  </head>
+  <body ng-controller="listaTelefonicaCtrl">
+    <div class="jumbotron">
+      <h4>{{app}}</h4>
+
+      <table class="table">
+        <tr>
+          <th></th>
+          <th>Nome</th>
+          <th>Telefone</th>
+          <th>Operadora</th>
+          <th>Cor</th>
+        </tr>
+        <tr
+          ng-class="{selecionado :contato.selecionado}"
+          ng-repeat="contato in contatos"
+        >
+          <td>
+            <input
+              class="check_selecionado"
+              type="checkbox"
+              ng-model="contato.selecionado"
+            />
+          </td>
+          <td>{{contato.nome}}</td>
+          <td>{{contato.telefone}}</td>
+          <td>{{contato.operadora.nome}}</td>
+          <td>
+            <div
+              class="cor_contato"
+              ng-style="{'background-color':contato.cor}"
+            ></div>
+          </td>
+        </tr>
+      </table>
+      <hr />
+      <form name="contatoForm">
+        <input
+          class="form-control"
+          type="text"
+          ng-model="contato.nome"
+          placeholder="Nome"
+          ng-required="true"
+          name="nome"
+          ng-minlength="10"
+        />
+        <input
+          class="form-control"
+          type="text"
+          ng-model="contato.telefone"
+          placeholder="Telefone"
+          ng-required="true"
+          name="telefone"
+        />
+        <select
+          class="form-control"
+          ng-model="contato.operadora"
+          ng-options="operadora.nome for operadora in operadoras"
+        >
+          <option value="">Seleciona uma operadora</option>
+        </select>
+      </form>
+
+      <div
+        class="alert alert-danger"
+        ng-show="contatoForm.nome.$error.required && contatoForm.nome.$dirty"
+      >
+        Por favor, preencha o nome !
+      </div>
+      <div
+        class="alert alert-danger"
+        ng-show="contatoForm.nome.$error.minlength && contatoForm.nome.$dirty"
+      >
+        O campo deve ter no mínimo 10 caracteres.
+      </div>
+      <div
+        class="alert alert-danger"
+        ng-show="contatoForm.telefone.$invalid && contatoForm.telefone.$dirty"
+      >
+        Por favor, preencha o telefone !
+      </div>
+      <button
+        class="btn btn-primary btn-block"
+        ng-click="adicionaContato(contato)"
+        ng-disabled="contatoForm.$invalid"
+      >
+        Adicionar Contato
+      </button>
+      <button
+        class="btn btn-danger btn-block"
+        ng-click="apagarContato(contatos)"
+        ng-if="isContatoSelecionado(contatos)"
+      >
+        Apagar Contato
+      </button>
+    </div>
+    <div ng-include="'app/componentes/footer.html'"></div>
+  </body>
+</html>

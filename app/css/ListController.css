@@ -1,0 +1,32 @@
+.jumbotron{
+    width: 500px;
+    text-align: center;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.table{
+    margin-top: 20px;
+}
+.form-control{
+    margin-top: 5px;;
+}
+.btn{
+    margin-top: 5px;
+}
+.selecionado{
+    background-color: #017852;
+}
+.check_selecionado{
+    padding-top: 5px;
+}
+.negrito_selecionado{
+    background-color: #0000;
+}
+.cor_contato{
+    width:  20px;
+    height: 20px;
+}
+.footer{
+    text-align: center;
+}
