@@ -1,0 +1,1 @@
+angular.module("listaTelefonica").value("config", "https://localhost:44335");
